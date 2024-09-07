@@ -3,7 +3,7 @@
 <html lang="en">
 <head><meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Análisis de Negocio sector Retail-V1_publicación</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>Análisis de Negocio sector Retail</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <style type="text/css">
     pre { line-height: 125%; }
 td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
@@ -7476,17 +7476,6 @@ a.anchor-link {
 <!-- End of mermaid configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 <main>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=67b6c36a">
-<div class="jp-Cell-inputWrapper" tabindex="0">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><em><span style="color: gray;"> Este proyecto está en proceso de desarrollo, por lo cual se está actualizando de manera diaria conforme se avanza con el progreso de los objetivos propuestos.</span></em></p>
-</div>
-</div>
-</div>
-</div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=9ab010a0">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
@@ -7498,15 +7487,15 @@ a.anchor-link {
 <h3 id="Objetivo:">Objetivo:<a class="anchor-link" href="#Objetivo:">¶</a></h3><p>EL onjetivo principal es identificar las principales características sobre envíos, precios, valor de fletes y múltiples variables adicionales con el fin de estudiar el comportamiento que presentan las ventas a través del negocio digital. De manera específica lograremos:</p>
 <ol>
 <li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Preparar el conjunto de datos y validar su calidad para emplear en el análisis propuesto.</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>Identificar las principales características en los datos a través del uso de estadística univariada y estadística bivariada.</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>Responder preguntas acerca del comportamiento de algunas variables del negocio.</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>Transformar la información proporcionada por el conjunto de datos en representaciones visuales a través de la visualización de datos en Python con el objetivo de analizar la información y comunicar de manera más efectivas las conclusiones obtenidas.</li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Identificar las principales características en los datos a través del uso de estadística univariada y estadística bivariada.</li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Responder preguntas acerca del comportamiento de algunas variables del negocio.</li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Transformar la información proporcionada por el conjunto de datos en representaciones visuales a través de la visualización de datos en Python con el objetivo de analizar la información y comunicar de manera más efectivas las conclusiones obtenidas.</li>
 </ol>
 <h3 id="Conocimientos-aplicados">Conocimientos aplicados<a class="anchor-link" href="#Conocimientos-aplicados">¶</a></h3><ol>
 <li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Carga de archivos mediante Pandas.</li>
 <li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Preparación y validación de la calidad del conjunto de datos a emplear.</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>Análisis exploratorio de datos.</li>
-<li class="task-list-item"><input class="task-list-item-checkbox" disabled="" type="checkbox"/>Visualización de datos con Python.</li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Análisis exploratorio de datos.</li>
+<li class="task-list-item"><input checked="" class="task-list-item-checkbox" disabled="" type="checkbox"/>Visualización de datos con Python.</li>
 </ol>
 </div>
 </div>
@@ -7527,12 +7516,17 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [128]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [137]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Importamos las liberías necesarias para realizar el análisis de interés.</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1">#librería para manejo de datos.</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span> <span class="c1">#librería para manejar tipo de datos datetime.</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1">#librería para cálculos matemáticos</span>
+<span class="c1">#nos permite analizar gráficos a través del mouse y redimencionarlas a conveniencia </span>
+<span class="kn">import</span> <span class="nn">plotly.express</span> <span class="k">as</span> <span class="nn">px</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
 <span class="c1">#cargamos el conjunto de datos a emplear.</span>
 <span class="n">data_ordenes</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'Ordenes_productos_C1_M2.3.csv'</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">';'</span><span class="p">)</span>
 <span class="n">data_ordenes</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -7546,7 +7540,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[128]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[137]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -7704,7 +7698,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [129]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#validamos en tamaño de nuestro conjunto de datos. </span>
@@ -7719,7 +7713,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[129]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[3]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>(10134, 18)</pre>
 </div>
@@ -7767,7 +7761,7 @@ a.anchor-link {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [130]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#identificamos cuantos datos vacíos se presenta en cada uno de los atributos del dataset.</span>
@@ -7782,7 +7776,7 @@ a.anchor-link {
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[130]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>orden_id                          0
 order_item_id                     0
@@ -7812,7 +7806,7 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [131]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Identificamos el porcentaje de datos vacíos para cada atributo con datos vacíos.</span>
@@ -7834,7 +7828,7 @@ dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[131]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[5]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>nombre_categoria_producto        0.226959
 longitud_nombre_producto         0.226959
@@ -7866,7 +7860,7 @@ podemos observar que hay un total de 23 valores vacíos en los últimos 8 atribu
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [145]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#eliminamos los registros vacíos del conjunto de datos.</span>
@@ -7897,7 +7891,7 @@ podemos observar que hay un total de 23 valores vacíos en los últimos 8 atribu
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [147]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#en primer lugar vamos a validar que cada uno de los atributos tenga el tipo de dato definido en el dicionario de datos. </span>
@@ -7912,7 +7906,7 @@ podemos observar que hay un total de 23 valores vacíos en los últimos 8 atribu
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[147]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>orden_id                          object
 order_item_id                     object
@@ -7953,7 +7947,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [149]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#cambiamos el formato de la columna "fecha_envio_limite" a datetime.</span>
@@ -7970,7 +7964,7 @@ dtype: object</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[149]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[8]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>fecha_envio_limite    datetime64[ns]
 dtype: object</pre>
@@ -7983,7 +7977,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [150]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#A simple vista no se observa que hayan problemas de calidad en los datos relacionados con la estandarización a parte del</span>
@@ -8175,7 +8169,7 @@ dtype: object</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [154]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#en primer lugar vamos a revisar si hay presencia de duplicados en el identificador único de la orden de venta.</span>
@@ -8207,7 +8201,7 @@ Valores duplicados en identificador único: 0
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [155]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#vamos a revisar si hay valores duplicados parcialmente en todo el conjunto de datos.</span>
@@ -8231,7 +8225,7 @@ Valores duplicados en identificador único: 0
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[155]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[11]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>orden_id                         0
 order_item_id                    0
@@ -8286,7 +8280,7 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [156]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Revisamos de manera rápida las variables estadísticas de los atributos numéricos con el fin de determinar si hay inconsistencia.</span>
@@ -8301,7 +8295,7 @@ dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[156]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8470,7 +8464,7 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [189]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [13]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#revisemos con más detalle como se comportan algunas de las columnas de precio, longitud_nombre_producto y codigo_postal_vendedor</span>
@@ -8485,7 +8479,7 @@ dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[189]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[13]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8589,7 +8583,7 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [221]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [14]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#revisamos con más detalle el atributo asociado al código postal del vendedor</span>
@@ -8604,7 +8598,7 @@ dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[221]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[14]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8697,7 +8691,7 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [213]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#identificamos las ciudades a las que representan dichos códigos postales.</span>
@@ -8714,7 +8708,7 @@ dtype: int64</pre>
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[213]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[15]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8819,7 +8813,7 @@ dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [219]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [16]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#verificamos si hay tantos códigos postales como ciudades en el conjunto de datos, determinando la</span>
@@ -8852,7 +8846,7 @@ Valores únicos ciudades: (71,)
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Análisis del atributo codigo_posstal_vendedor:</strong> podemos observar que hay 4 cados dónde el código postal tiene solo 4 digítos, que no es solo el caso del valor mínimo, por lo cual este caso no es aislado. Para profundizar en este caso comparamos el código postal del vendedor junto con el nombre de la ciudad de este, con el fin de determinar si estos código de 4 dígitos son correctos o es por una omisión de algún dígito al momento del registro. Observamos que la cantidad de valores únicos en cada atributo son iguales, por lo cual se descarta la posibilidad de los códigos con un número de 4 dígitos sean errores de consistencia.</p>
+<p><strong>Análisis del atributo codigo_postal_vendedor:</strong> podemos observar que hay 4 cados dónde el código postal tiene solo 4 digítos, que no es solo el caso del valor mínimo, por lo cual este caso no es aislado. Para profundizar en este caso comparamos el código postal del vendedor junto con el nombre de la ciudad de este, con el fin de determinar si estos código de 4 dígitos son correctos o es por una omisión de algún dígito al momento del registro. Observamos que la cantidad de valores únicos en cada atributo son iguales, por lo cual se descarta la posibilidad de los códigos con un número de 4 dígitos sean errores de consistencia.</p>
 </div>
 </div>
 </div>
@@ -8861,7 +8855,7 @@ Valores únicos ciudades: (71,)
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In [224]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In [17]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="c1">#revisamos con más detalle el atributo asociado a la longitud del nombre del producto</span>
@@ -8876,7 +8870,7 @@ Valores únicos ciudades: (71,)
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
-<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[224]:</div>
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[17]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8995,13 +8989,1059 @@ Valores únicos ciudades: (71,)
 </div>
 </div>
 </div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=11857e04">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=329c9cee">
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><em><span style="color: gray;"> Este proyecto está en proceso de desarrollo, por lo cual se está actualizando de manera diaria conforme se avanza con el progreso de los objetivos propuestos.</span></em></p>
+<h2 id="3.-An%C3%A1lisis-estad%C3%ADstico-univariado">3. Análisis estadístico univariado<a class="anchor-link" href="#3.-An%C3%A1lisis-estad%C3%ADstico-univariado">¶</a></h2><h3 id="Objetivos">Objetivos<a class="anchor-link" href="#Objetivos">¶</a></h3><ol>
+<li>Determinar cual es el comportamiento estadístico de los atributos numéricos del dataset.</li>
+<li>Identificar cuales son las categorías de producto más vendidas a nivel nacional y cuales son aquellas que componen el 20% de las ventas principales del negocio digital con el fin de aplicar un descuento el precio de venta sobre estas.</li>
+<li>Determinar cual el porcentaje de los productos que pesan menos de 1000 g con el fin de aplicar un descuento sobre el valor del flete de estos productos.</li>
+</ol>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=fbb4e5ad">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [18]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#revisamos las principales variables estadísticas del conjunto de datos, tales como media, desviación estandar,</span>
+<span class="c1">#y percentiles del 25, 50 y 75%.</span>
+<span class="n">data_ordenes</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[18]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>fecha_envio_limite</th>
+<th>precio</th>
+<th>valor_flete</th>
+<th>codigo_postal_vendedor</th>
+<th>longitud_nombre_producto</th>
+<th>longitud_descripcion_producto</th>
+<th>cantidad_fotos_producto</th>
+<th>peso_g_producto</th>
+<th>longitud_cm_producto</th>
+<th>altura_cm_producto</th>
+<th>ancho_cm_producto</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>count</th>
+<td>10111</td>
+<td>10111.000000</td>
+<td>10111.000000</td>
+<td>10111.000000</td>
+<td>10111.000000</td>
+<td>10111.000000</td>
+<td>10111.000000</td>
+<td>10111.000000</td>
+<td>10111.000000</td>
+<td>10111.000000</td>
+<td>10111.00000</td>
+</tr>
+<tr>
+<th>mean</th>
+<td>2018-01-03 05:02:30.406488064</td>
+<td>119.868468</td>
+<td>20.062207</td>
+<td>49995.607457</td>
+<td>20.070023</td>
+<td>19.844724</td>
+<td>20.097616</td>
+<td>2106.475522</td>
+<td>30.067352</td>
+<td>17.911186</td>
+<td>22.91257</td>
+</tr>
+<tr>
+<th>min</th>
+<td>2017-07-13 22:38:00</td>
+<td>0.010000</td>
+<td>0.000000</td>
+<td>5001.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.000000</td>
+<td>0.00000</td>
+</tr>
+<tr>
+<th>25%</th>
+<td>2017-10-08 11:40:00</td>
+<td>34.175000</td>
+<td>5.760000</td>
+<td>50001.000000</td>
+<td>10.000000</td>
+<td>10.000000</td>
+<td>10.000000</td>
+<td>607.000000</td>
+<td>19.000000</td>
+<td>9.000000</td>
+<td>15.00000</td>
+</tr>
+<tr>
+<th>50%</th>
+<td>2018-01-03 06:13:00</td>
+<td>83.180000</td>
+<td>13.990000</td>
+<td>52323.000000</td>
+<td>20.000000</td>
+<td>20.000000</td>
+<td>20.000000</td>
+<td>1459.000000</td>
+<td>30.000000</td>
+<td>17.000000</td>
+<td>23.00000</td>
+</tr>
+<tr>
+<th>75%</th>
+<td>2018-04-01 03:34:30</td>
+<td>165.640000</td>
+<td>27.475000</td>
+<td>54003.000000</td>
+<td>30.000000</td>
+<td>30.000000</td>
+<td>30.000000</td>
+<td>2941.000000</td>
+<td>41.000000</td>
+<td>26.000000</td>
+<td>30.00000</td>
+</tr>
+<tr>
+<th>max</th>
+<td>2018-06-26 02:19:00</td>
+<td>1262.940000</td>
+<td>183.150000</td>
+<td>99001.000000</td>
+<td>40.000000</td>
+<td>40.000000</td>
+<td>40.000000</td>
+<td>20661.000000</td>
+<td>91.000000</td>
+<td>64.000000</td>
+<td>72.00000</td>
+</tr>
+<tr>
+<th>std</th>
+<td>NaN</td>
+<td>119.386311</td>
+<td>20.111832</td>
+<td>22461.742889</td>
+<td>11.719844</td>
+<td>11.851631</td>
+<td>11.802373</td>
+<td>2094.402206</td>
+<td>15.286299</td>
+<td>11.359838</td>
+<td>11.15189</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=0a06a2b0">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p>A partir de esta primera decripción estadísticas de los datos podemos tener un acercamiento a la forma de distribución de los atributos. Al observar  el valor del percentil 50 y el valor máximo del precio de venta, nos damos cuenta que los precios de ventas presentan una asimetría positiva debido a que los datos se concentran en mayor cantidad a la izquierda con un sesgo a la derecha; este también es el caso para el valor del flete, el peso del producto vendido y y las dimensiones del producto. Sin embargo, la concentración de los datos hacia la izquierda es mucho mayor en los atributos de precio, valor del flete y peso del producto.</p>
+<p>Para el caso de los atributos relacionados con las características del nombre del producto y la descripción de este, de acuerdo con el valor de su mediana y el valor máximo registrado, se observa que presentan una distribución simétrica.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=41933dd8">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><strong>Contexto:</strong> desde el negocio están interesados en conocer cuáles son las categorías de productos más vendidad a nivel nacional, del mismo modo que conocer cuales son aquellas categorías que contribuyen al 20% de las ventas principales en el negocio, esto con el fin de diseñar una estrategia de negocio enfocada en dichas categorías en la que se buscará realizar un descuento sobre estas.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=39969cd1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [19]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Para conocer cuáles son las categorías de productos más vendidas calcularemos la distribución de frecuencias de este atributo. </span>
+
+<span class="c1">#Calculamos la frecuencia absoluta de las distintas categorías.</span>
+<span class="n">frec_productos</span><span class="o">=</span><span class="n">data_ordenes</span><span class="p">[</span><span class="s1">'nombre_categoria_producto'</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">frec_productos</span><span class="o">=</span><span class="n">frec_productos</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'count'</span><span class="p">:</span><span class="s1">'fi'</span><span class="p">})</span>
+<span class="c1">#Calculamos la fecuencia relativa.</span>
+<span class="n">frec_productos</span><span class="p">[</span><span class="s1">'hi %'</span><span class="p">]</span><span class="o">=</span><span class="n">frec_productos</span><span class="p">[</span><span class="s1">'fi'</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:((</span><span class="n">x</span><span class="o">/</span><span class="n">frec_productos</span><span class="p">[</span><span class="s1">'fi'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">*</span><span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="c1">#Calculamos ahora la frecuencia absuluta acumulada y relativa acumulada</span>
+<span class="n">frec_productos</span><span class="p">[</span><span class="s1">'Fi'</span><span class="p">]</span><span class="o">=</span><span class="n">frec_productos</span><span class="p">[</span><span class="s1">'fi'</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> <span class="c1">#frecuencia absoluta acumulada</span>
+<span class="n">frec_productos</span><span class="p">[</span><span class="s1">'Hi %'</span><span class="p">]</span><span class="o">=</span><span class="n">frec_productos</span><span class="p">[</span><span class="s1">'hi %'</span><span class="p">]</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span> <span class="c1">#frecuencia relativa acumulada</span>
+<span class="n">frec_productos</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[19]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>nombre_categoria_producto</th>
+<th>fi</th>
+<th>hi %</th>
+<th>Fi</th>
+<th>Hi %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>Tecnología</td>
+<td>542</td>
+<td>5.4</td>
+<td>542</td>
+<td>5.4</td>
+</tr>
+<tr>
+<th>1</th>
+<td>Deportes</td>
+<td>537</td>
+<td>5.3</td>
+<td>1079</td>
+<td>10.7</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Frutas y verduras</td>
+<td>531</td>
+<td>5.3</td>
+<td>1610</td>
+<td>16.0</td>
+</tr>
+<tr>
+<th>3</th>
+<td>Carnicería</td>
+<td>523</td>
+<td>5.2</td>
+<td>2133</td>
+<td>21.2</td>
+</tr>
+<tr>
+<th>4</th>
+<td>Ropa de adultos</td>
+<td>521</td>
+<td>5.2</td>
+<td>2654</td>
+<td>26.4</td>
+</tr>
+<tr>
+<th>5</th>
+<td>Ferretería</td>
+<td>518</td>
+<td>5.1</td>
+<td>3172</td>
+<td>31.5</td>
+</tr>
+<tr>
+<th>6</th>
+<td>Juguetes</td>
+<td>516</td>
+<td>5.1</td>
+<td>3688</td>
+<td>36.6</td>
+</tr>
+<tr>
+<th>7</th>
+<td>Ropa infantil</td>
+<td>511</td>
+<td>5.1</td>
+<td>4199</td>
+<td>41.7</td>
+</tr>
+<tr>
+<th>8</th>
+<td>Electrodomésticos</td>
+<td>509</td>
+<td>5.0</td>
+<td>4708</td>
+<td>46.7</td>
+</tr>
+<tr>
+<th>9</th>
+<td>Dormitorio</td>
+<td>508</td>
+<td>5.0</td>
+<td>5216</td>
+<td>51.7</td>
+</tr>
+<tr>
+<th>10</th>
+<td>Lácteos</td>
+<td>499</td>
+<td>4.9</td>
+<td>5715</td>
+<td>56.6</td>
+</tr>
+<tr>
+<th>11</th>
+<td>Libros</td>
+<td>497</td>
+<td>4.9</td>
+<td>6212</td>
+<td>61.5</td>
+</tr>
+<tr>
+<th>12</th>
+<td>Productos ecoamigables</td>
+<td>497</td>
+<td>4.9</td>
+<td>6709</td>
+<td>66.4</td>
+</tr>
+<tr>
+<th>13</th>
+<td>Mascotas</td>
+<td>495</td>
+<td>4.9</td>
+<td>7204</td>
+<td>71.3</td>
+</tr>
+<tr>
+<th>14</th>
+<td>Tarjetas regalo</td>
+<td>495</td>
+<td>4.9</td>
+<td>7699</td>
+<td>76.2</td>
+</tr>
+<tr>
+<th>15</th>
+<td>Salud</td>
+<td>488</td>
+<td>4.8</td>
+<td>8187</td>
+<td>81.0</td>
+</tr>
+<tr>
+<th>16</th>
+<td>Celulares</td>
+<td>488</td>
+<td>4.8</td>
+<td>8675</td>
+<td>85.8</td>
+</tr>
+<tr>
+<th>17</th>
+<td>Muebles</td>
+<td>486</td>
+<td>4.8</td>
+<td>9161</td>
+<td>90.6</td>
+</tr>
+<tr>
+<th>18</th>
+<td>Licor</td>
+<td>475</td>
+<td>4.7</td>
+<td>9636</td>
+<td>95.3</td>
+</tr>
+<tr>
+<th>19</th>
+<td>Bebés</td>
+<td>475</td>
+<td>4.7</td>
+<td>10111</td>
+<td>100.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=89061534">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><strong>Productos principales:</strong> podemos observar que a nivel nacional los productos contribuyen a las ventas de una forma casi uniforme, donde cada uno de estos productos tiene un peso en las ventas de aproximadamente el 5%, por lo cual podría decirse que a pesar de que hay algunas categorías que son primeras en ventas, el 50% de las ventas del negocio será alcanzado siempre con la mitad de las categorías existentes, sin importar, cual de ellas sean escogidas, de acuerdo con los datos actuales.</p>
+<p>Por otro lado, las categorías de Tecnología, Deportes, Frutas y verduras, y Carnicería deberán ser las escogidas para aplicar la estaregia de descuento si se quiere impactar sobre el 20% principal de las ventas.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b599207c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [197]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#vamos a visualizar en un gráfico de pastel como es el comportamiento de las ventas a nivel nacional.</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">frec_productos</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="s2">"fi"</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="s2">"nombre_categoria_producto"</span><span class="p">,</span>
+             <span class="n">title</span><span class="o">=</span><span class="s2">"Comportamiento de las ventas a nivel nacional"</span><span class="p">)</span>
+<span class="n">fig</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div> <div class="plotly-graph-div" id="e30bc142-d625-433b-a941-63fe7fbf0d33" style="height:525px; width:100%;"></div> <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("e30bc142-d625-433b-a941-63fe7fbf0d33")) {                    Plotly.newPlot(                        "e30bc142-d625-433b-a941-63fe7fbf0d33",                        [{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"hovertemplate":"nombre_categoria_producto=%{label}<br>fi=%{value}<extra></extra>","labels":["Tecnolog\u00eda","Deportes","Frutas y verduras","Carnicer\u00eda","Ropa de adultos","Ferreter\u00eda","Juguetes","Ropa infantil","Electrodom\u00e9sticos","Dormitorio","L\u00e1cteos","Libros","Productos ecoamigables","Mascotas","Tarjetas regalo","Salud","Celulares","Muebles","Licor","Beb\u00e9s\u00a0"],"legendgroup":"","name":"","showlegend":true,"values":[542,537,531,523,521,518,516,511,509,508,499,497,497,495,495,488,488,486,475,475],"type":"pie"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"legend":{"tracegroupgap":0},"title":{"text":"Comportamiento de las ventas a nivel nacional"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('e30bc142-d625-433b-a941-63fe7fbf0d33');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script> </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=17ea10c3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><strong>Contexto:</strong> desde el negocio se ha decido que se quiere aplicar una estrategia de negocio adicional, y para esto desean realizar una campaña de descuento enfocada en el valor del flete de envío de los productos, este descuento en alianza con la empresa de logística, se podrá aplicar solo a aquellos productos que tengan un peso menos a 1000 g.</p>
+<p>De acuerdo a lo anterior, la empresa desea conocer cuál es el porcentaje de los productos vendidos al cual se le podrá aplicar dicho descuento y conocer las categorías que se verán impactas.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=08e5a81e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [59]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#a partir de la descripción estadística previa realizada sobre los datos, sabemos que el porcentaje de productos con un peso </span>
+<span class="c1">#menor o igual a 1000 gr se encuentra entre 25% y 50%. Por ello procedemos a encontrar el percentil en este rango. </span>
+
+<span class="c1">#creamos un diccionario para guardar los resultados de percentil y peso del producto.</span>
+<span class="n">percentiles</span><span class="o">=</span><span class="p">{}</span>
+<span class="n">rango_min</span><span class="o">=</span><span class="mf">0.25</span> <span class="c1">#rango de percentil mínimo de búsqueda.</span>
+<span class="n">rango_max</span><span class="o">=</span><span class="mf">0.50</span> <span class="c1">#rango de percentil máximo de búsqueda.</span>
+<span class="n">valor_deseado</span><span class="o">=</span><span class="mi">1000</span> <span class="c1">#peso máximo permitido.</span>
+
+<span class="c1">#creamos un ciclo que intere entre el rango propuesto.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">rango_min</span><span class="p">,</span><span class="n">rango_max</span><span class="p">,</span><span class="mf">0.01</span><span class="p">):</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">data_ordenes</span><span class="p">[</span><span class="s2">"peso_g_producto"</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">-</span> <span class="n">valor_deseado</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span> 
+        <span class="c1">#guardamos todos los resultados menores o iguales a 1000 g.</span>
+        <span class="n">percentiles</span><span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">)]</span><span class="o">=</span><span class="nb">round</span><span class="p">(</span><span class="n">data_ordenes</span><span class="p">[</span><span class="s2">"peso_g_producto"</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">i</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1">#imprimimos el percentil que proporciona el peso de producto más cercano a 1000 g.</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"El porcentaje de productos con un peso menor o igual a 1000 es de"</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">percentiles</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="s2">"%"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
+<pre>El porcentaje de productos con un peso menor o igual a 1000 es de 37.0 %
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=d08be843">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [108]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#Encontremos aquellas categorías que tienen productos con un peso menor a 1000 g. </span>
+<span class="n">prod_descuento</span><span class="o">=</span><span class="n">data_ordenes</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">data_ordenes</span><span class="p">[</span><span class="s2">"peso_g_producto"</span><span class="p">]</span><span class="o">&lt;=</span><span class="mi">1000</span><span class="p">,</span><span class="s2">"nombre_categoria_producto"</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"En descuento"</span><span class="p">)</span>
+<span class="n">prod_descuento</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">prod_descuento</span><span class="p">,</span><span class="n">frec_productos</span><span class="p">[[</span><span class="s2">"nombre_categoria_producto"</span><span class="p">,</span><span class="s2">"fi"</span><span class="p">]],</span><span class="n">on</span><span class="o">=</span><span class="s2">"nombre_categoria_producto"</span><span class="p">,</span><span class="n">how</span><span class="o">=</span><span class="s2">"inner"</span><span class="p">)</span>
+<span class="n">prod_descuento</span><span class="p">[</span><span class="s2">"</span><span class="si">% d</span><span class="s2">e categoría"</span><span class="p">]</span><span class="o">=</span><span class="nb">round</span><span class="p">((</span><span class="n">prod_descuento</span><span class="p">[</span><span class="s2">"En descuento"</span><span class="p">]</span><span class="o">/</span><span class="n">prod_descuento</span><span class="p">[</span><span class="s1">'fi'</span><span class="p">])</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">prod_descuento</span><span class="p">[</span><span class="s2">"</span><span class="si">% d</span><span class="s2">e productos"</span><span class="p">]</span><span class="o">=</span><span class="nb">round</span><span class="p">((</span><span class="n">prod_descuento</span><span class="p">[</span><span class="s2">"En descuento"</span><span class="p">]</span><span class="o">/</span><span class="n">prod_descuento</span><span class="p">[</span><span class="s1">'fi'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span><span class="o">*</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">prod_descuento</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[108]:</div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>nombre_categoria_producto</th>
+<th>En descuento</th>
+<th>fi</th>
+<th>% de categoría</th>
+<th>% de productos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>Ropa de adultos</td>
+<td>210</td>
+<td>521</td>
+<td>40.0</td>
+<td>2.1</td>
+</tr>
+<tr>
+<th>1</th>
+<td>Electrodomésticos</td>
+<td>202</td>
+<td>509</td>
+<td>40.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Mascotas</td>
+<td>200</td>
+<td>495</td>
+<td>40.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<th>3</th>
+<td>Carnicería</td>
+<td>199</td>
+<td>523</td>
+<td>38.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<th>4</th>
+<td>Deportes</td>
+<td>199</td>
+<td>537</td>
+<td>37.0</td>
+<td>2.0</td>
+</tr>
+<tr>
+<th>5</th>
+<td>Libros</td>
+<td>197</td>
+<td>497</td>
+<td>40.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>6</th>
+<td>Tecnología</td>
+<td>195</td>
+<td>542</td>
+<td>36.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>7</th>
+<td>Frutas y verduras</td>
+<td>194</td>
+<td>531</td>
+<td>37.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>8</th>
+<td>Tarjetas regalo</td>
+<td>194</td>
+<td>495</td>
+<td>39.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>9</th>
+<td>Juguetes</td>
+<td>192</td>
+<td>516</td>
+<td>37.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>10</th>
+<td>Dormitorio</td>
+<td>192</td>
+<td>508</td>
+<td>38.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>11</th>
+<td>Muebles</td>
+<td>191</td>
+<td>486</td>
+<td>39.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>12</th>
+<td>Lácteos</td>
+<td>191</td>
+<td>499</td>
+<td>38.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>13</th>
+<td>Productos ecoamigables</td>
+<td>191</td>
+<td>497</td>
+<td>38.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>14</th>
+<td>Ferretería</td>
+<td>190</td>
+<td>518</td>
+<td>37.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>15</th>
+<td>Celulares</td>
+<td>189</td>
+<td>488</td>
+<td>39.0</td>
+<td>1.9</td>
+</tr>
+<tr>
+<th>16</th>
+<td>Salud</td>
+<td>181</td>
+<td>488</td>
+<td>37.0</td>
+<td>1.8</td>
+</tr>
+<tr>
+<th>17</th>
+<td>Ropa infantil</td>
+<td>175</td>
+<td>511</td>
+<td>34.0</td>
+<td>1.7</td>
+</tr>
+<tr>
+<th>18</th>
+<td>Licor</td>
+<td>167</td>
+<td>475</td>
+<td>35.0</td>
+<td>1.7</td>
+</tr>
+<tr>
+<th>19</th>
+<td>Bebés</td>
+<td>164</td>
+<td>475</td>
+<td>35.0</td>
+<td>1.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=599894d6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [208]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#visualicemos la cantidad de productos en descuento.</span>
+<span class="c1">#creamos un dataframe para identificar el total de productos en descuentos y el total de productos que no están en descuento. </span>
+<span class="n">proporcion_desc</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+<span class="n">proporcion_desc</span><span class="p">[</span><span class="s2">"Estado del producto"</span><span class="p">]</span><span class="o">=</span><span class="s2">"En descuento"</span><span class="p">,</span><span class="s2">"Sin descuento"</span>
+<span class="n">proporcion_desc</span><span class="p">[</span><span class="s2">"Cantidad"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="n">prod_descuento</span><span class="p">[</span><span class="s2">"En descuento"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()),</span>
+                               <span class="p">(</span><span class="o">-</span><span class="n">prod_descuento</span><span class="p">[</span><span class="s2">"En descuento"</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">+</span><span class="n">prod_descuento</span><span class="p">[</span><span class="s1">'fi'</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">())]</span>
+<span class="c1">#construimos el gráfico de pastel para visualizar los datos.</span>
+<span class="n">fig1</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">proporcion_desc</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="s2">"Cantidad"</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="s2">"Estado del producto"</span><span class="p">,</span>
+             <span class="n">title</span><span class="o">=</span><span class="s2">"Proporción de productos en descuento"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=0204a3ce">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [204]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#vamos a visualizar en un gráfico de pastel como se distribuye el descuento en productos menores a 1000 g. </span>
+<span class="n">fig2</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">pie</span><span class="p">(</span><span class="n">prod_descuento</span><span class="p">,</span><span class="n">values</span><span class="o">=</span><span class="s2">"En descuento"</span><span class="p">,</span><span class="n">names</span><span class="o">=</span><span class="s2">"nombre_categoria_producto"</span><span class="p">,</span>
+             <span class="n">title</span><span class="o">=</span><span class="s2">"Constribución de cada categoría a los productos en descuento"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=b268c6f3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [209]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#vamos a visualizar en un gráfico de barras como se distribuye el descuento a nivel de categorías.</span>
+<span class="c1">#creamos colores aleatorias para la figura.</span>
+<span class="n">get_colors</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="s2">"#"</span> <span class="o">+</span> <span class="s2">"</span><span class="si">%06x</span><span class="s2">"</span> <span class="o">%</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mh">0xFFFFFF</span><span class="p">),</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+<span class="n">colores</span><span class="o">=</span><span class="n">get_colors</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">prod_descuento</span><span class="p">))</span>
+<span class="c1">#creamos la figura con Plotly.</span>
+<span class="n">fig3</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">prod_descuento</span><span class="p">,</span><span class="n">x</span><span class="o">=</span><span class="s2">"</span><span class="si">% d</span><span class="s2">e categoría"</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="s2">"nombre_categoria_producto"</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s2">"nombre_categoria_producto"</span><span class="p">,</span>
+            <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">colores</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="s2">"Proporción de productos en descuento según su categoría"</span><span class="p">)</span>
+<span class="c1">#cambiamos el grosor de las barras para que sean más legibles.</span>
+<span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">fig3</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+    <span class="n">bar</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=1d9535f3">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [206]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="c1">#vamos a visualizar en un gráfico de barras como se distribuye el descuento a nivel total de productos constrastado con a nivel</span>
+<span class="c1">#de categorías.</span>
+<span class="n">fig4</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">prod_descuento</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="s2">"</span><span class="si">% d</span><span class="s2">e productos"</span><span class="p">,</span><span class="s2">"</span><span class="si">% d</span><span class="s2">e categoría"</span><span class="p">],</span><span class="n">x</span><span class="o">=</span><span class="s2">"nombre_categoria_producto"</span><span class="p">,</span><span class="n">barmode</span><span class="o">=</span><span class="s2">"group"</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="s2">"Porporción de productos en descuento"</span><span class="p">)</span>
+<span class="c1">#cambiamos el grosor de las barras para que sean más legibles.</span>
+<span class="k">for</span> <span class="n">bar</span> <span class="ow">in</span> <span class="n">fig4</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+    <span class="n">bar</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mf">0.4</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=a4fad503">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<p><strong>Cantidad de productos aceptables:</strong> la estrategia de negocio basada en un descuento al valor del envío se podrá aplicar solo al 37% de los productos y se podrán incluir en el descuento todas las categorías de venta del negocio. Los productos que estarán en descuentos representan para cada categoría entre un 35 y 40% de su totalidad; y representan entre un 1.6 y 2.1% del total de productos vendidos en el negocio por cada categoría en descuento.</p>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=74b4cf89">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [210]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">show</span><span class="p">(),</span><span class="n">fig1</span><span class="o">.</span><span class="n">show</span><span class="p">(),</span><span class="n">fig2</span><span class="o">.</span><span class="n">show</span><span class="p">(),</span><span class="n">fig3</span><span class="o">.</span><span class="n">show</span><span class="p">(),</span><span class="n">fig4</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
+<div class="jp-OutputArea jp-Cell-outputArea">
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div> <div class="plotly-graph-div" id="122af390-ad82-48a8-b78a-aa3c9bc69ff0" style="height:525px; width:100%;"></div> <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("122af390-ad82-48a8-b78a-aa3c9bc69ff0")) {                    Plotly.newPlot(                        "122af390-ad82-48a8-b78a-aa3c9bc69ff0",                        [{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"hovertemplate":"nombre_categoria_producto=%{label}<br>fi=%{value}<extra></extra>","labels":["Tecnolog\u00eda","Deportes","Frutas y verduras","Carnicer\u00eda","Ropa de adultos","Ferreter\u00eda","Juguetes","Ropa infantil","Electrodom\u00e9sticos","Dormitorio","L\u00e1cteos","Libros","Productos ecoamigables","Mascotas","Tarjetas regalo","Salud","Celulares","Muebles","Licor","Beb\u00e9s\u00a0"],"legendgroup":"","name":"","showlegend":true,"values":[542,537,531,523,521,518,516,511,509,508,499,497,497,495,495,488,488,486,475,475],"type":"pie"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"legend":{"tracegroupgap":0},"title":{"text":"Comportamiento de las ventas a nivel nacional"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('122af390-ad82-48a8-b78a-aa3c9bc69ff0');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script> </div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div> <div class="plotly-graph-div" id="1cb2c966-6694-4e35-851e-7133fa278928" style="height:525px; width:100%;"></div> <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("1cb2c966-6694-4e35-851e-7133fa278928")) {                    Plotly.newPlot(                        "1cb2c966-6694-4e35-851e-7133fa278928",                        [{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"hovertemplate":"Estado del producto=%{label}<br>Cantidad=%{value}<extra></extra>","labels":["En descuento","Sin descuento"],"legendgroup":"","name":"","showlegend":true,"values":[3813,6298],"type":"pie"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"legend":{"tracegroupgap":0},"title":{"text":"Proporci\u00f3n de productos en descuento"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('1cb2c966-6694-4e35-851e-7133fa278928');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script> </div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div> <div class="plotly-graph-div" id="8bfc921e-08e4-4409-b8cf-c0c2343dcec5" style="height:525px; width:100%;"></div> <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("8bfc921e-08e4-4409-b8cf-c0c2343dcec5")) {                    Plotly.newPlot(                        "8bfc921e-08e4-4409-b8cf-c0c2343dcec5",                        [{"domain":{"x":[0.0,1.0],"y":[0.0,1.0]},"hovertemplate":"nombre_categoria_producto=%{label}<br>En descuento=%{value}<extra></extra>","labels":["Ropa de adultos","Electrodom\u00e9sticos","Mascotas","Carnicer\u00eda","Deportes","Libros","Tecnolog\u00eda","Frutas y verduras","Tarjetas regalo","Juguetes","Dormitorio","Muebles","L\u00e1cteos","Productos ecoamigables","Ferreter\u00eda","Celulares","Salud","Ropa infantil","Licor","Beb\u00e9s\u00a0"],"legendgroup":"","name":"","showlegend":true,"values":[210,202,200,199,199,197,195,194,194,192,192,191,191,191,190,189,181,175,167,164],"type":"pie"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"legend":{"tracegroupgap":0},"title":{"text":"Constribuci\u00f3n de cada categor\u00eda a los productos en descuento"}},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('8bfc921e-08e4-4409-b8cf-c0c2343dcec5');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script> </div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div> <div class="plotly-graph-div" id="eda014d8-e41a-4210-b8df-d7039d01946f" style="height:525px; width:100%;"></div> <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("eda014d8-e41a-4210-b8df-d7039d01946f")) {                    Plotly.newPlot(                        "eda014d8-e41a-4210-b8df-d7039d01946f",                        [{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Ropa de adultos","marker":{"color":"#b43811","pattern":{"shape":""}},"name":"Ropa de adultos","offsetgroup":"Ropa de adultos","orientation":"h","showlegend":true,"textposition":"auto","x":[40.0],"xaxis":"x","y":["Ropa de adultos"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Electrodom\u00e9sticos","marker":{"color":"#155d72","pattern":{"shape":""}},"name":"Electrodom\u00e9sticos","offsetgroup":"Electrodom\u00e9sticos","orientation":"h","showlegend":true,"textposition":"auto","x":[40.0],"xaxis":"x","y":["Electrodom\u00e9sticos"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Mascotas","marker":{"color":"#232e97","pattern":{"shape":""}},"name":"Mascotas","offsetgroup":"Mascotas","orientation":"h","showlegend":true,"textposition":"auto","x":[40.0],"xaxis":"x","y":["Mascotas"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Carnicer\u00eda","marker":{"color":"#027a77","pattern":{"shape":""}},"name":"Carnicer\u00eda","offsetgroup":"Carnicer\u00eda","orientation":"h","showlegend":true,"textposition":"auto","x":[38.0],"xaxis":"x","y":["Carnicer\u00eda"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Deportes","marker":{"color":"#a43107","pattern":{"shape":""}},"name":"Deportes","offsetgroup":"Deportes","orientation":"h","showlegend":true,"textposition":"auto","x":[37.0],"xaxis":"x","y":["Deportes"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Libros","marker":{"color":"#180ed0","pattern":{"shape":""}},"name":"Libros","offsetgroup":"Libros","orientation":"h","showlegend":true,"textposition":"auto","x":[40.0],"xaxis":"x","y":["Libros"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Tecnolog\u00eda","marker":{"color":"#e7bd07","pattern":{"shape":""}},"name":"Tecnolog\u00eda","offsetgroup":"Tecnolog\u00eda","orientation":"h","showlegend":true,"textposition":"auto","x":[36.0],"xaxis":"x","y":["Tecnolog\u00eda"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Frutas y verduras","marker":{"color":"#f499cf","pattern":{"shape":""}},"name":"Frutas y verduras","offsetgroup":"Frutas y verduras","orientation":"h","showlegend":true,"textposition":"auto","x":[37.0],"xaxis":"x","y":["Frutas y verduras"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Tarjetas regalo","marker":{"color":"#315b20","pattern":{"shape":""}},"name":"Tarjetas regalo","offsetgroup":"Tarjetas regalo","orientation":"h","showlegend":true,"textposition":"auto","x":[39.0],"xaxis":"x","y":["Tarjetas regalo"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Juguetes","marker":{"color":"#872124","pattern":{"shape":""}},"name":"Juguetes","offsetgroup":"Juguetes","orientation":"h","showlegend":true,"textposition":"auto","x":[37.0],"xaxis":"x","y":["Juguetes"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Dormitorio","marker":{"color":"#e7a394","pattern":{"shape":""}},"name":"Dormitorio","offsetgroup":"Dormitorio","orientation":"h","showlegend":true,"textposition":"auto","x":[38.0],"xaxis":"x","y":["Dormitorio"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Muebles","marker":{"color":"#5e447e","pattern":{"shape":""}},"name":"Muebles","offsetgroup":"Muebles","orientation":"h","showlegend":true,"textposition":"auto","x":[39.0],"xaxis":"x","y":["Muebles"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"L\u00e1cteos","marker":{"color":"#b3dfcc","pattern":{"shape":""}},"name":"L\u00e1cteos","offsetgroup":"L\u00e1cteos","orientation":"h","showlegend":true,"textposition":"auto","x":[38.0],"xaxis":"x","y":["L\u00e1cteos"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Productos ecoamigables","marker":{"color":"#1bf682","pattern":{"shape":""}},"name":"Productos ecoamigables","offsetgroup":"Productos ecoamigables","orientation":"h","showlegend":true,"textposition":"auto","x":[38.0],"xaxis":"x","y":["Productos ecoamigables"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Ferreter\u00eda","marker":{"color":"#259f40","pattern":{"shape":""}},"name":"Ferreter\u00eda","offsetgroup":"Ferreter\u00eda","orientation":"h","showlegend":true,"textposition":"auto","x":[37.0],"xaxis":"x","y":["Ferreter\u00eda"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Celulares","marker":{"color":"#2ce2c2","pattern":{"shape":""}},"name":"Celulares","offsetgroup":"Celulares","orientation":"h","showlegend":true,"textposition":"auto","x":[39.0],"xaxis":"x","y":["Celulares"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Salud","marker":{"color":"#d7d86c","pattern":{"shape":""}},"name":"Salud","offsetgroup":"Salud","orientation":"h","showlegend":true,"textposition":"auto","x":[37.0],"xaxis":"x","y":["Salud"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Ropa infantil","marker":{"color":"#6e069d","pattern":{"shape":""}},"name":"Ropa infantil","offsetgroup":"Ropa infantil","orientation":"h","showlegend":true,"textposition":"auto","x":[34.0],"xaxis":"x","y":["Ropa infantil"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Licor","marker":{"color":"#c618c1","pattern":{"shape":""}},"name":"Licor","offsetgroup":"Licor","orientation":"h","showlegend":true,"textposition":"auto","x":[35.0],"xaxis":"x","y":["Licor"],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"nombre_categoria_producto=%{y}<br>% de categor\u00eda=%{x}<extra></extra>","legendgroup":"Beb\u00e9s\u00a0","marker":{"color":"#8bbb9e","pattern":{"shape":""}},"name":"Beb\u00e9s\u00a0","offsetgroup":"Beb\u00e9s\u00a0","orientation":"h","showlegend":true,"textposition":"auto","x":[35.0],"xaxis":"x","y":["Beb\u00e9s\u00a0"],"yaxis":"y","type":"bar","width":0.4}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"% de categor\u00eda"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"nombre_categoria_producto"},"categoryorder":"array","categoryarray":["Beb\u00e9s\u00a0","Licor","Ropa infantil","Salud","Celulares","Ferreter\u00eda","Productos ecoamigables","L\u00e1cteos","Muebles","Dormitorio","Juguetes","Tarjetas regalo","Frutas y verduras","Tecnolog\u00eda","Libros","Deportes","Carnicer\u00eda","Mascotas","Electrodom\u00e9sticos","Ropa de adultos"]},"legend":{"title":{"text":"nombre_categoria_producto"},"tracegroupgap":0},"title":{"text":"Proporci\u00f3n de productos en descuento seg\u00fan su categor\u00eda"},"barmode":"relative"},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('eda014d8-e41a-4210-b8df-d7039d01946f');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script> </div>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output" data-mime-type="text/html" tabindex="0">
+<div> <div class="plotly-graph-div" id="6eac88fd-a418-4f19-83e3-89b2215ef3e3" style="height:525px; width:100%;"></div> <script type="text/javascript">                require(["plotly"], function(Plotly) {                    window.PLOTLYENV=window.PLOTLYENV || {};                                    if (document.getElementById("6eac88fd-a418-4f19-83e3-89b2215ef3e3")) {                    Plotly.newPlot(                        "6eac88fd-a418-4f19-83e3-89b2215ef3e3",                        [{"alignmentgroup":"True","hovertemplate":"variable=% de productos<br>nombre_categoria_producto=%{x}<br>value=%{y}<extra></extra>","legendgroup":"% de productos","marker":{"color":"#636efa","pattern":{"shape":""}},"name":"% de productos","offsetgroup":"% de productos","orientation":"v","showlegend":true,"textposition":"auto","x":["Ropa de adultos","Electrodom\u00e9sticos","Mascotas","Carnicer\u00eda","Deportes","Libros","Tecnolog\u00eda","Frutas y verduras","Tarjetas regalo","Juguetes","Dormitorio","Muebles","L\u00e1cteos","Productos ecoamigables","Ferreter\u00eda","Celulares","Salud","Ropa infantil","Licor","Beb\u00e9s\u00a0"],"xaxis":"x","y":[2.1,2.0,2.0,2.0,2.0,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.9,1.8,1.7,1.7,1.6],"yaxis":"y","type":"bar","width":0.4},{"alignmentgroup":"True","hovertemplate":"variable=% de categor\u00eda<br>nombre_categoria_producto=%{x}<br>value=%{y}<extra></extra>","legendgroup":"% de categor\u00eda","marker":{"color":"#EF553B","pattern":{"shape":""}},"name":"% de categor\u00eda","offsetgroup":"% de categor\u00eda","orientation":"v","showlegend":true,"textposition":"auto","x":["Ropa de adultos","Electrodom\u00e9sticos","Mascotas","Carnicer\u00eda","Deportes","Libros","Tecnolog\u00eda","Frutas y verduras","Tarjetas regalo","Juguetes","Dormitorio","Muebles","L\u00e1cteos","Productos ecoamigables","Ferreter\u00eda","Celulares","Salud","Ropa infantil","Licor","Beb\u00e9s\u00a0"],"xaxis":"x","y":[40.0,40.0,40.0,38.0,37.0,40.0,36.0,37.0,39.0,37.0,38.0,39.0,38.0,38.0,37.0,39.0,37.0,34.0,35.0,35.0],"yaxis":"y","type":"bar","width":0.4}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmapgl":[{"type":"heatmapgl","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"xaxis":{"anchor":"y","domain":[0.0,1.0],"title":{"text":"nombre_categoria_producto"}},"yaxis":{"anchor":"x","domain":[0.0,1.0],"title":{"text":"value"}},"legend":{"title":{"text":"variable"},"tracegroupgap":0},"title":{"text":"Porporci\u00f3n de productos en descuento"},"barmode":"group"},                        {"responsive": true}                    ).then(function(){
+                            
+var gd = document.getElementById('6eac88fd-a418-4f19-83e3-89b2215ef3e3');
+var x = new MutationObserver(function (mutations, observer) {{
+        var display = window.getComputedStyle(gd).display;
+        if (!display || display === 'none') {{
+            console.log([gd, 'removed!']);
+            Plotly.purge(gd);
+            observer.disconnect();
+        }}
+}});
+
+// Listen for the removal of the full notebook cells
+var notebookContainer = gd.closest('#notebook-container');
+if (notebookContainer) {{
+    x.observe(notebookContainer, {childList: true});
+}}
+
+// Listen for the clearing of the current output cell
+var outputEl = gd.closest('.output');
+if (outputEl) {{
+    x.observe(outputEl, {childList: true});
+}}
+
+                        })                };                });            </script> </div>
+</div>
+</div>
+<div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[210]:</div>
+<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
+<pre>(None, None, None, None, None)</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=bcf02916">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Conclusi%C3%B3n-del-an%C3%A1lisis-de-negocio"><span style="color: blue;">Conclusión del análisis de negocio</span><a class="anchor-link" href="#Conclusi%C3%B3n-del-an%C3%A1lisis-de-negocio">¶</a></h2><p>Al describir los datos de manera estadística pudimos y al observar el valor del percentil 50 y el valor máximo del precio de venta, nos dimos cuenta que los precios de venta presentan una asimetría positiva debido a que los datos se concentran en mayor cantidad a la izquierda con un sesgo a la derecha; este también es el caso para el valor del flete, el peso del producto vendido y y las dimensiones del producto. Sin embargo, la concentración de los datos hacia la izquierda es mucho mayor en los atributos de precio, valor del flete y peso del producto.</p>
+<p>Para el caso de los atributos relacionados con las características del nombre del producto y la descripción de este, de acuerdo con el valor de su mediana y el valor máximo registrado, se observa que presentan una distribución simétrica.</p>
+<p>Desde el punto de vista del negocio, podemos observar que a nivel nacional los productos contribuyen a las ventas de una forma casi uniforme, donde cada uno de estos productos tiene un peso en las ventas de aproximadamente el 5%, por lo cual podría decirse que a pesar de que hay algunas categorías que son primeras en ventas, el 50% de las ventas del negocio será alcanzado siempre con la mitad de las categorías existentes, sin importar, cual de ellas sean escogidas, de acuerdo con los datos actuales.</p>
+<p>Como estrategia de negocio, las categorías de Tecnología, Deportes, Frutas y verduras, y Carnicería deberán ser las escogidas para aplicar la estaregia de descuento sobre el precio de producto si se quiere impactar sobre el 20% principal de las ventas. Adicionalmente, la estrategia de negocio basada en un descuento al valor del envío se podrá aplicar solo al 37% de los productos y se podrán incluir en el descuento todas las categorías de venta del negocio. Los productos que estarán en descuentos representan para cada categoría entre un 35 y 40% de su totalidad; y representan entre un 1.6 y 2.1% del total de productos vendidos en el negocio por cada categoría en descuento.</p>
 </div>
 </div>
 </div>
